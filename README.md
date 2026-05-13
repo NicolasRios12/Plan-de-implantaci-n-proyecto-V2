@@ -246,6 +246,101 @@ dog_club/
 5. **Testing**: No se incluyen unit/widget tests. Recomendable agregarlos antes de cualquier lanzamiento.
 6. **Antigravity**: Asumo que es tu IDE/local wrapper. Todo el código es 100% compatible con Flutter estándar + cualquier editor (VS Code, Android Studio, Cursor, etc.).
 
+
+Aquí tienes el **Plan de Implementación Expandido**, desglosado día a día (o por bloques lógicos de 1-2 días), con tareas concretas, comandos, archivos clave, criterios de validación y entregables. Está diseñado para un **ritmo escolar sostenible**, priorizando aprendizaje, trazabilidad y entrega funcional sin sobrecarga técnica.
+
+---
+## 📅 PLAN DETALLADO DE IMPLEMENTACIÓN (4 SEMANAS / 20 DÍAS HÁBILES)
+
+### 🔵 SEMANA 1: Configuración, Arquitectura Base y Conexión Firebase
+**Objetivo:** Tener el proyecto corriendo, conectado a Firestore en modo prueba, con navegación base y tema aplicado.
+
+| Día | Tarea | Archivos/Comandos Clave | Criterio de Éxito |
+|-----|-------|------------------------|-------------------|
+| 1 | Crear proyecto Flutter, estructura de carpetas, `pubspec.yaml` con dependencias | `flutter create dog_club --platforms=android,ios,web`<br>`flutter pub get` | Proyecto compila sin errores. Estructura `lib/`, `assets/`, `config/`, `core/`, `data/`, `presentation/` creada. |
+| 2 | Configurar Firebase: proyecto en console, CLI, reglas de prueba | `flutterfire configure`<br>`firebase init firestore` | `firebase_options.dart` generado. App conecta a Firestore. Reglas en modo prueba activas hasta 31/12/2026. |
+| 3 | Implementar tema, constantes, enrutador base y `main.dart` | `lib/config/theme.dart`<br>`lib/config/routes.dart`<br>`lib/main.dart` | App inicia con `MaterialApp` usando `DogClubTheme`. Navegación básica (`Home`, `Auth`, `Placeholder`) funciona. |
+| 4 | Crear utilidades core: validadores, formateadores, enums | `lib/core/utils/validators.dart`<br>`lib/core/utils/formatters.dart`<br>`lib/core/constants/enums.dart` | Validadores retornan `String?`. Formateadores manejan `DateTime` y `double`. Enums coinciden con tu modelo DB. |
+| 5 | Setup Auth (modo escolar): login anónimo/email, provider base | `lib/data/repositories/auth_repository.dart`<br>`lib/presentation/providers/auth_provider.dart` | Usuario puede iniciar sesión con credenciales mock o anónimo. Estado persiste en sesión. |
+
+📦 **Entregable Semana 1:** App funcional en emulador/dispositivo, conectada a Firestore, con tema azul aplicado, navegación base y login mock.
+
+---
+
+### 🔵 SEMANA 2: Capa de Datos, Modelos y Gestión de Estado
+**Objetivo:** Traducir tus tablas relacionales a documentos Firestore, crear repositorios y conectar con `Provider`.
+
+| Día | Tarea | Archivos/Comandos Clave | Criterio de Éxito |
+|-----|-------|------------------------|-------------------|
+| 6 | Crear modelos Dart (`Cliente`, `Mascota`, `Servicio`, `Reservacion`, etc.) | `lib/core/models/*.dart` | Cada modelo tiene `fromFirestore()`, `toFirestore()`, `copyWith()` y validación de tipos. |
+| 7 | Implementar repositorios base (CRUD) | `lib/data/repositories/servicio_repository.dart`<br>`lib/data/repositories/mascota_repository.dart` | Métodos `getAll()`, `getById()`, `create()`, `update()` retornan `Future`/`Stream` y manejan errores con `try/catch`. |
+| 8 | Configurar Providers y estado global | `lib/presentation/providers/servicios_provider.dart`<br>`lib/presentation/providers/reservaciones_provider.dart` | UI reacciona a cambios de estado. `notifyListeners()` se llama correctamente. Loading/error states definidos. |
+| 9 | Poblar datos de prueba y verificar sincronización | Firebase Console > Firestore > Import/Manual Entry<br>`lib/presentation/providers/*` | Datos mock aparecen en UI. Fechas se parsean correctamente. Precios se muestran con `intl`. |
+| 10 | Manejo de errores, estados vacíos y caché local básico | `lib/presentation/widgets/empty_state.dart`<br>`lib/presentation/widgets/loading_shimmer.dart` | App muestra `EmptyState` si no hay datos, `Shimmer` mientras carga, y toast/SnackBar en errores. |
+
+📦 **Entregable Semana 2:** Capa de datos funcional. Modelos ↔ Firestore sincronizados. Providers gestionan estado. App maneja carga, errores y datos vacíos.
+
+---
+
+### 🔵 SEMANA 3: UI/UX, Flujos Principales y Navegación Completa
+**Objetivo:** Construir todas las pantallas, conectar flujos de usuario y pulir experiencia visual.
+
+| Día | Tarea | Archivos/Comandos Clave | Criterio de Éxito |
+|-----|-------|------------------------|-------------------|
+| 11 | Pantalla Home/Dashboard | `lib/presentation/screens/home/home_screen.dart`<br>`lib/presentation/widgets/service_card.dart` | Bienvenida personalizada, accesos rápidos, lista de próximas reservas. Diseño responsive. |
+| 12 | Catálogo de Servicios | `lib/presentation/screens/servicios/servicios_screen.dart` | Grid/List filtrable por categoría. Cards con precio, duración, badge de estado. Scroll fluido. |
+| 13 | Formulario de Reserva | `lib/presentation/screens/reservar/booking_form.dart` | Selector de mascota, `DateTimePicker`, validación en tiempo real, resumen de precio, botón confirmar. |
+| 14 | Historial y Seguimiento | `lib/presentation/screens/historial/historial_screen.dart`<br>`lib/presentation/widgets/status_badge.dart` | Lista de reservas pasadas/activas. Badges de color según estado. Detalle expandible. |
+| 15 | Perfil, Ajustes y Microinteracciones | `lib/presentation/screens/perfil/perfil_screen.dart`<br>`lib/presentation/widgets/custom_appbar.dart` | Edición de datos, cierre de sesión, transiciones suaves, `Hero` animations, accesibilidad básica. |
+
+📦 **Entregable Semana 3:** UI completa y navegable. Todos los flujos principales funcionales. Diseño consistente con paleta azul. Animaciones y feedback visual implementados.
+
+---
+
+### 🔵 SEMANA 4: Integración Final, Pruebas, Documentación y Entrega
+**Objetivo:** Unir UI con datos, validar funcionamiento, documentar y preparar material de entrega escolar.
+
+| Día | Tarea | Archivos/Comandos Clave | Criterio de Éxito |
+|-----|-------|------------------------|-------------------|
+| 16 | Integración formularios ↔ repositorios/providers | `lib/presentation/providers/reservaciones_provider.dart` (método `crearReserva`) | Reserva se guarda en Firestore, estado cambia a `pendiente`, UI se actualiza sin reiniciar. |
+| 17 | Pruebas manuales estructuradas | `docs/test_matrix.md`<br>`flutter run --debug` | Matrix completada: happy path, edge cases (fechas inválidas, sin mascota, offline simulado), validación de UI. |
+| 18 | Optimización y limpieza | `flutter analyze`<br>`flutter test` (si aplica)<br>Revisión de `print()`/`TODO` | 0 errores/warnings críticos. Uso de `const` donde aplica. Imágenes cacheadas. Sin memory leaks obvios. |
+| 19 | Documentación técnica y guía de uso | `README.md`<br>`docs/arquitectura.md`<br>`docs/firebase_rules.md` | README con: setup, run, estructura, reglas Firestore, créditos, capturas de pantalla. Código comentado. |
+| 20 | Empaquetado, demo y entrega final | `flutter build apk --debug`<br>Grabación de pantalla 3-5 min<br>Commit final + tag `v1.0-escolar` | APK/Bundle listo. Video demo funcional. Repositorio limpio. Todo listo para presentación. |
+
+📦 **Entregable Semana 4:** App integrada, probada, documentada y empaquetada. Material de defensa listo. Repositorio en estado final.
+
+---
+## 🛠️ HERRAMIENTAS Y FLUJO DE TRABAJO RECOMENDADO
+
+| Herramienta | Uso en el Proyecto |
+|-------------|-------------------|
+| **Firebase Emulator Suite** | Pruebas locales rápidas, sin consumir cuotas reales. `firebase emulators:start` |
+| **Flutter DevTools** | Inspección de UI, rendimiento, red y estado de providers. `flutter pub global run devtools` |
+| **Git + GitHub/GitLab** | Commits diarios, ramas `dev`, `feature/*`, `main`. Protege contra pérdida de avance. |
+| **VS Code / Android Studio** | Extensiones: `Flutter`, `Dart`, `Firebase`, `Error Lens`. |
+| **Figma / Excalidraw** | Wireframes rápidos antes de codificar. Útil para validar flujos con el profesor. |
+
+---
+
+---
+## ✅ CHECKLIST DE ENTREGA FINAL (PARA PRESENTACIÓN)
+
+- [ ] `flutter doctor -v` sin errores críticos
+- [ ] `pubspec.yaml` con versiones estables y sin dependencias innecesarias
+- [ ] Estructura de carpetas sigue el árbol proporcionado
+- [ ] Firestore en modo prueba activo (reglas con fecha límite)
+- [ ] `README.md` con: instrucciones, arquitectura, capturas, créditos
+- [ ] APK/Debug build funcional (no requiere producción signing)
+- [ ] Video demo (3-5 min) mostrando: login → navegación → reserva → historial → perfil
+- [ ] Código comentado, sin `print()` sueltos, con manejo básico de errores
+- [ ] Repositorio con commits descriptivos y sin archivos `.dart_tool` o `build/`
+
+
+
+---
+
+¿Quieres que te entregue el **código completo de alguna semana específica** (ej: `booking_form.dart` con validaciones, `reservaciones_provider.dart` con métodos CRUD, o `test_matrix.md` listo para usar)? Solo indícame el bloque y te lo genero estructurado, comentado y listo para integrar. 🐶💙
 ---
 ## Prompt
 Actua como un creador de software, diseñador de aplicaciones moviles multiplataforma.
