@@ -1,4 +1,4 @@
-# Plan-de-implantacion-proyecto-V2
+# Plan-de-implementacion-proyecto-V2
 Aquí tienes una guía completa y estructurada para tu proyecto **Dog Club** en Flutter + Firebase. Todo está diseñado como prototipo/MVP (no orientado a producción) y adaptado a tus tablas relacionales.
 
 ---
