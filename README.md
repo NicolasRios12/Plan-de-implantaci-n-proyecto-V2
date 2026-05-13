@@ -247,5 +247,86 @@ dog_club/
 6. **Antigravity**: Asumo que es tu IDE/local wrapper. Todo el código es 100% compatible con Flutter estándar + cualquier editor (VS Code, Android Studio, Cursor, etc.).
 
 ---
+## Prompt
+Actua como un creador de software, diseñador de aplicaciones moviles multiplataforma.
+Proyecto de Guarderia canina llamado "Dog Club", el objetivo de esta app es que los dueños de los perros puedan buscar cuidadores, paseadores o guarderias para sus mascotas. La paleta de colores sera centrada en azules, como diseñador de aplicaciones moviles seras el encargado de generar una paleta de colores centrada en azules para appbar, botones y el blanco como apoyo para distiguir a apreciar otras cosas.
+El entorno de trabajo que usare sera la aplicacion antigravity vinculada con una base de datos en firebase console, me proporcionaras la lista de dependencias que necesitare para el pubspec.yaml, como ayuda para la generacion de este proyecto te dejare las tablas que planeo usar para este proyecto con sus campos, tipo de dato y descripcion:
 
-¿Quieres que genere el código base de algún módulo en particular (ej. `reservacion_model.dart`, `service_booking_screen.dart`, o la configuración de `go_router` con autenticación)? Puedo entregártlo listo para copiar/pegar en tu estructura.
+CLIENTES
+Dueños de las mascotas registradas
+Atributo	Tipo	Restricción	Descripción
+id_cliente	INT	PK NN	Identificador único autoincremental
+nombre	VARCHAR(80)	NN	Nombre(s) del cliente
+apellido	VARCHAR(80)	NN	Apellido(s) del cliente
+telefono	VARCHAR(20)	NN	Teléfono de contacto principal
+email	VARCHAR(120)	UQ	Correo electrónico
+direccion	VARCHAR(200)	—	Domicilio del cliente
+fecha_registro	DATE	NN	Fecha de alta en el sistema
+MASCOTAS
+Perros registrados en Dog Club
+Atributo	Tipo	Restricción	Descripción
+id_mascota	INT	PK NN	Identificador único autoincremental
+id_cliente	INT	FK NN	Referencia a CLIENTES
+nombre	VARCHAR(60)	NN	Nombre de la mascota
+raza	VARCHAR(80)	—	Raza del perro
+tamanio	ENUM	NN	Pequeño / mediano / grande
+edad	TINYINT	—	Edad en años
+notas_medicas	TEXT	—	Alergias, condiciones especiales
+foto_url	VARCHAR(255)	—	URL de la foto del perro
+SERVICIOS
+Catálogo de servicios ofrecidos
+Atributo	Tipo	Restricción	Descripción
+id_servicio	INT	PK NN	Identificador único autoincremental
+nombre	VARCHAR(100)	NN	Nombre del servicio
+descripcion	TEXT	—	Detalle del servicio ofrecido
+categoria	ENUM	NN	guarderia / cuidado / paseo
+precio_base	DECIMAL(8,2)	NN	Precio estándar del servicio
+duracion_min	SMALLINT	—	Duración estimada en minutos
+activo	BOOLEAN	NN	Disponible para reservar (borrado lógico)
+EMPLEADOS
+Personal que atiende los servicios
+Atributo	Tipo	Restricción	Descripción
+id_empleado	INT	PK NN	Identificador único autoincremental
+nombre	VARCHAR(80)	NN	Nombre(s) del empleado
+apellido	VARCHAR(80)	NN	Apellido(s) del empleado
+rol	ENUM	NN	cuidador / paseador / groomer / admin
+telefono	VARCHAR(20)	—	Teléfono de contacto
+activo	BOOLEAN	NN	Empleado vigente (borrado lógico)
+RESERVACIONES
+Tabla central del negocio
+Atributo	Tipo	Restricción	Descripción
+id_reservacion	INT	PK NN	Identificador único autoincremental
+id_mascota	INT	FK NN	Referencia a MASCOTAS
+id_servicio	INT	FK NN	Referencia a SERVICIOS
+id_empleado	INT	FK	Referencia a EMPLEADOS (asignable)
+fecha_inicio	DATETIME	NN	Inicio del servicio
+fecha_fin	DATETIME	—	Fin estimado / real del servicio
+estado	ENUM	NN	pendiente / confirmada / en_curso / completada / cancelada
+precio_final	DECIMAL(8,2)	—	Precio real cobrado (permite descuentos)
+notas	TEXT	—	Instrucciones especiales del cliente
+PAGOS
+Registro de cobros por reservación
+Atributo	Tipo	Restricción	Descripción
+id_pago	INT	PK NN	Identificador único autoincremental
+id_reservacion	INT	FK NN	Referencia a RESERVACIONES
+monto	DECIMAL(8,2)	NN	Cantidad pagada
+metodo	ENUM	NN	efectivo / tarjeta / transferencia
+fecha_pago	DATETIME	NN	Fecha y hora del pago
+estado	ENUM	NN	pendiente / pagado / reembolsado
+INCIDENCIAS
+Eventos durante la prestación del servicio
+Atributo	Tipo	Restricción	Descripción
+id_incidencia	INT	PK NN	Identificador único autoincremental
+id_reservacion	INT	FK NN	Referencia a RESERVACIONES
+descripcion	TEXT	NN	Descripción del evento ocurrido
+severidad	ENUM	NN	baja / media / alta
+fecha_hora	DATETIME	NN	Fecha y hora del incidente
+PK Llave primaria
+FK Llave foránea
+NN NOT NULL
+UQ UNIQUE.
+Tambien me vas a generar un arbol de la estructura del proyecto con todos los archivos para saber como quedara estructurado mi proyecto.
+tambien dame el Diseño UI y UX, describelo ampliamente
+No hacer para produccion
+
+
