@@ -339,9 +339,6 @@ Aquí tienes el **Plan de Implementación Expandido**, desglosado día a día (o
 
 
 ---
-
-¿Quieres que te entregue el **código completo de alguna semana específica** (ej: `booking_form.dart` con validaciones, `reservaciones_provider.dart` con métodos CRUD, o `test_matrix.md` listo para usar)? Solo indícame el bloque y te lo genero estructurado, comentado y listo para integrar. 🐶💙
----
 ## Prompt
 Actua como un creador de software, diseñador de aplicaciones moviles multiplataforma.
 Proyecto de Guarderia canina llamado "Dog Club", el objetivo de esta app es que los dueños de los perros puedan buscar cuidadores, paseadores o guarderias para sus mascotas. La paleta de colores sera centrada en azules, como diseñador de aplicaciones moviles seras el encargado de generar una paleta de colores centrada en azules para appbar, botones y el blanco como apoyo para distiguir a apreciar otras cosas.
